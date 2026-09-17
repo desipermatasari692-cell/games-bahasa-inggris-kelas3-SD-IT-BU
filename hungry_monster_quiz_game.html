@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hungry Monster - Game Bahasa Inggris Kelas 3 SD</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for cute icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap');
+
+        body {
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+            background-color: #f0fdf4;
+            background-image: radial-gradient(#bbf7d0 2px, transparent 2px);
+            background-size: 24px 24px;
+        }
+
+        .monster-bounce {
+            animation: monsterFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes monsterFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .monster-eat {
+            animation: eatAnim 0.6s ease-in-out;
+        }
+
+        @keyframes eatAnim {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.25) rotate(-5deg); }
+            60% { transform: scale(0.9) rotate(5deg); }
+            100% { transform: scale(1); }
+        }
+
+        .card-shadow {
+            box-shadow: 0 12px 0 0 #0284c7;
+        }
+
+        .btn-shadow {
+            box-shadow: 0 6px 0 0 #0369a1;
+        }
+
+        .btn-shadow:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 #0369a1;
+        }
+
+        .btn-green-shadow {
+            box-shadow: 0 6px 0 0 #15803d;
+        }
+
+        .btn-green-shadow:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 #15803d;
+        }
+
+        .btn-purple-shadow {
+            box-shadow: 0 6px 0 0 #6b21a8;
+        }
+
+        .btn-purple-shadow:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 #6b21a8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-3 sm:p-6 text-slate-800">
+
+    <div class="w-full max-w-2xl bg-white rounded-3xl border-4 border-sky-400 p-4 sm:p-8 relative card-shadow transition-all duration-300">
+        
+        <!-- HEADER APP -->
+        <header class="text-center border-b-4 border-dashed border-sky-200 pb-4 mb-6">
+            <div class="inline-flex items-center gap-2 bg-sky-100 text-sky-800 px-4 py-1.5 rounded-full font-bold text-xs sm:text-sm uppercase tracking-wider mb-2">
+                <i class="fa-solid fa-utensils"></i> English Food & Drink Quiz - Grade 3
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-sky-600 tracking-wide uppercase">
+                The Hungry Monster 👾
+            </h1>
+            <p class="text-slate-500 text-sm sm:text-base font-medium">Bantu si Monster kenyang dengan memilih jawaban yang tepat!</p>
+        </header>
+
+        <!-- START SCREEN -->
+        <div id="start-screen" class="space-y-6">
+            <div class="text-center my-4">
+                <div class="relative inline-block">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop&q=80" 
+                         alt="Food Banner" 
+                         class="w-full h-44 sm:h-52 object-cover rounded-2xl border-4 border-amber-300 shadow-md mb-2"
+                         onerror="this.onerror=null; this.src='https://placehold.co/600x300/e0f2fe/0369a1?text=Food+%26+Drink';">
+                    <div id="start-monster-avatar" class="absolute -bottom-4 right-4 text-6xl sm:text-7xl monster-bounce cursor-pointer filter drop-shadow-md" onclick="triggerMonsterEat()">
+                        👾🥣
+                    </div>
+                </div>
+                <p class="text-xs text-slate-400 mt-3 font-bold">(Klik Monster untuk melihat reaksinya!)</p>
+            </div>
+
+            <!-- Rules Box -->
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-900 text-sm space-y-2">
+                <h3 class="font-bold text-base flex items-center gap-2 text-amber-800">
+                    <i class="fa-solid fa-star text-amber-500"></i> Aturan Bermain:
+                </h3>
+                <ul class="list-disc list-inside space-y-1 font-semibold text-slate-700">
+                    <li>Ada <strong>20 Soal</strong> pilihan ganda tentang Food & Drink.</li>
+                    <li>Waktu pengerjaan total: <strong>20 Menit</strong>.</li>
+                    <li>Tiap jawaban benar mendapat <strong>5 Poin</strong> (Skor Maksimal: 100).</li>
+                    <li>Nilai kamu akan otomatis tersimpan dalam <strong>Rekap Nilai Guru</strong>!</li>
+                </ul>
+            </div>
+
+            <!-- Student Form -->
+            <div class="space-y-4 bg-sky-50 p-4 rounded-2xl border-2 border-sky-200">
+                <div>
+                    <label for="student-name" class="block font-bold text-sky-900 text-sm sm:text-base mb-1">
+                        <i class="fa-solid fa-user text-sky-600"></i> Nama Lengkap Siswa:
+                    </label>
+                    <input type="text" id="student-name" placeholder="Tulis nama lengkap kamu..." 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-sky-300 focus:border-sky-500 focus:outline-none font-bold text-slate-700 shadow-sm">
+                </div>
+
+                <div>
+                    <label for="student-class" class="block font-bold text-sky-900 text-sm sm:text-base mb-1">
+                        <i class="fa-solid fa-id-badge text-sky-600"></i> Kelas / Nomor Absen:
+                    </label>
+                    <input type="text" id="student-class" placeholder="Contoh: 3A / 15" 
+                           class="w-full px-4 py-3 rounded-xl border-2 border-sky-300 focus:border-sky-500 focus:outline-none font-bold text-slate-700 shadow-sm">
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="startGame()" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white text-lg font-bold py-4 rounded-2xl btn-shadow transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> Mulai Main Sekarang!
+                </button>
+                
+                <button onclick="openTeacherDashboard()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-5 rounded-2xl btn-purple-shadow transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
+                    <i class="fa-solid fa-clipboard-list"></i> Rekap Guru
+                </button>
+            </div>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="hidden space-y-5">
+            <!-- Stats bar -->
+            <div class="flex justify-between items-center bg-sky-100 px-4 py-2.5 rounded-2xl border-2 border-sky-200 font-bold text-sky-900 text-sm sm:text-base">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-sky-600"></i> Soal <span id="current-question-num" class="text-sky-600 text-lg">1</span>/20
+                </span>
+                <div class="flex items-center gap-2 bg-amber-200 text-amber-900 px-3 py-1 rounded-full border border-amber-400 font-extrabold text-sm">
+                    <i class="fa-regular fa-clock"></i> <span id="timer-display">20:00</span>
+                </div>
+            </div>
+
+            <!-- Monster Avatar in Quiz -->
+            <div class="text-center my-2">
+                <div id="quiz-monster-avatar" class="text-6xl sm:text-7xl monster-bounce inline-block">
+                    👾
+                </div>
+                <div id="monster-bubble" class="mt-1 inline-block bg-white border-2 border-slate-300 px-3 py-1 rounded-full text-xs font-bold text-slate-600 shadow-sm">
+                    "Monster siap makan! Pilih jawabanmu ya!"
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-slate-50 border-l-8 border-sky-400 p-4 sm:p-5 rounded-2xl shadow-sm">
+                <!-- Question Image Container -->
+                <div id="question-image-container" class="mb-3 overflow-hidden rounded-xl border-2 border-sky-200 shadow-sm bg-sky-50">
+                    <img id="question-image" src="" alt="Gambar Soal Food & Drink" 
+                         class="w-full h-44 sm:h-56 object-cover hover:scale-105 transition-transform duration-300"
+                         onerror="this.onerror=null; this.src='https://placehold.co/600x300/e0f2fe/0369a1?text=Food+%26+Drink';">
+                </div>
+                <p id="question-text" class="text-base sm:text-lg font-bold text-slate-800 leading-relaxed">
+                    Loading soal...
+                </p>
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="grid grid-cols-1 gap-3">
+                <!-- Options generated via JavaScript -->
+            </div>
+
+            <!-- Action Button -->
+            <button id="next-btn" onclick="nextQuestion()" disabled
+                    class="w-full bg-sky-500 hover:bg-sky-600 text-white text-base sm:text-lg font-bold py-3.5 rounded-2xl btn-shadow transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                Lanjut Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="result-screen" class="hidden text-center space-y-6">
+            <div id="result-monster-avatar" class="text-7xl sm:text-8xl monster-bounce inline-block">
+                🎉👾🍔
+            </div>
+            
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-sky-600">Hore! Kuis Selesai!</h2>
+                <p class="text-slate-500 text-sm font-semibold">Terima kasih sudah membantu memberi makan si Monster!</p>
+            </div>
+
+            <!-- Score Badge Card -->
+            <div class="bg-emerald-50 border-4 border-emerald-300 rounded-3xl p-5 shadow-sm space-y-2">
+                <p class="text-xs sm:text-sm font-extrabold text-emerald-700 tracking-wider uppercase">Nilai Akhir Kamu</p>
+                <div id="final-score-display" class="text-6xl sm:text-7xl font-black text-emerald-600 my-1">
+                    0
+                </div>
+                <div id="student-summary-info" class="font-extrabold text-slate-700 text-base sm:text-lg">
+                    -
+                </div>
+                <div class="flex justify-center items-center gap-4 text-xs sm:text-sm font-bold text-slate-600 pt-2 border-t border-emerald-200">
+                    <span><i class="fa-solid fa-circle-check text-emerald-500"></i> Benar: <strong id="summary-correct">0</strong>/20</span>
+                    <span><i class="fa-solid fa-stopwatch text-amber-500"></i> Waktu: <strong id="summary-time">-</strong></span>
+                </div>
+            </div>
+
+            <!-- Feedback Message -->
+            <div id="feedback-message" class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 text-sky-900 font-bold text-sm sm:text-base">
+                -
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="resetToStart()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl btn-green-shadow transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i> Main Lagi
+                </button>
+                <button onclick="openTeacherDashboard()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-5 rounded-2xl btn-purple-shadow transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-clipboard-list"></i> Lihat Rekap Guru
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TEACHER DASHBOARD MODAL -->
+    <div id="teacher-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6 z-50">
+        <div class="bg-white border-4 border-purple-400 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            
+            <!-- Modal Header -->
+            <div class="bg-purple-600 text-white p-4 sm:p-5 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500 border-2 border-purple-300 flex items-center justify-center text-xl">
+                        📋
+                    </div>
+                    <div>
+                        <h2 class="font-extrabold text-lg sm:text-xl leading-tight">Rekap Nilai Siswa (Guru)</h2>
+                        <p class="text-purple-200 text-xs sm:text-sm font-medium">Semua nilai otomatis tersimpan di HP/Laptop ini</p>
+                    </div>
+                </div>
+                <button onclick="closeTeacherDashboard()" class="w-9 h-9 rounded-full bg-purple-700 hover:bg-purple-800 text-white font-bold flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
+                <!-- Tools bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 bg-purple-50 p-3 rounded-2xl border border-purple-200">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-purple-400 text-sm"></i>
+                        <input type="text" id="search-student" onkeyup="renderTeacherTable()" placeholder="Cari nama atau kelas..." 
+                               class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border-2 border-purple-200 focus:border-purple-500 focus:outline-none font-semibold text-slate-700">
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="exportScoresCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-file-excel"></i> Unduh CSV
+                        </button>
+                        <button onclick="confirmClearScores()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-trash-can"></i> Hapus Semua
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Score Table -->
+                <div class="overflow-x-auto rounded-2xl border-2 border-slate-200">
+                    <table class="w-full text-left text-sm text-slate-700">
+                        <thead class="bg-slate-100 text-slate-800 uppercase font-bold text-xs border-b-2 border-slate-200">
+                            <tr>
+                                <th class="p-3">No</th>
+                                <th class="p-3">Nama Siswa</th>
+                                <th class="p-3">Kelas/Absen</th>
+                                <th class="p-3 text-center">Nilai</th>
+                                <th class="p-3 text-center">Benar</th>
+                                <th class="p-3 text-center">Waktu</th>
+                                <th class="p-3">Tanggal & Jam</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teacher-table-body" class="divide-y divide-slate-200 font-semibold">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="empty-scores-msg" class="hidden text-center py-8 text-slate-400 font-bold text-sm">
+                    <i class="fa-regular fa-folder-open text-4xl mb-2 block"></i>
+                    Belum ada data nilai tersimpan. Selesaikan kuis untuk menyimpan nilai!
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-slate-50 border-t border-slate-200 p-3 sm:p-4 text-center">
+                <button onclick="closeTeacherDashboard()" class="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm transition-all">
+                    Tutup Rekap
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CUSTOM ALERT / CONFIRM MODAL -->
+    <div id="custom-dialog" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4 z-[60]">
+        <div class="bg-white border-4 border-amber-400 rounded-3xl w-full max-w-sm p-5 text-center space-y-4 shadow-2xl">
+            <div id="dialog-icon" class="text-5xl">⚠️</div>
+            <h3 id="dialog-title" class="text-xl font-extrabold text-slate-800">Pemberitahuan</h3>
+            <p id="dialog-message" class="text-sm font-semibold text-slate-600 leading-relaxed"></p>
+
+            <div id="dialog-buttons" class="flex justify-center gap-2 pt-2">
+                <!-- Action buttons via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizDatabase = [
+            {
+                question: "Monster sangat lapar! Dia ingin makan 'Fried Rice'. Apa arti dari 'Fried Rice'?",
+                image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&auto=format&fit=crop&q=80",
+                options: ["Nasi Goreng", "Mie Goreng", "Ayam Goreng", "Telur Dadar"],
+                correct: 0
+            },
+            {
+                question: "I drink a glass of ... every morning. (Saya minum segelas ... setiap pagi)",
+                image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=600&auto=format&fit=crop&q=80",
+                options: ["Pizza", "Milk", "Soup", "Burger"],
+                correct: 1
+            },
+            {
+                question: "Manakah di bawah ini yang merupakan kategori 'Drink' (Minuman)?",
+                image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600&auto=format&fit=crop&q=80",
+                options: ["Bread", "Meatball", "Orange Juice", "Fried Chicken"],
+                correct: 2
+            },
+            {
+                question: "Sinta haus sekali setelah olahraga. Dia butuh air putih. Bahasa Inggris dari 'air putih' adalah...",
+                image: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=600&auto=format&fit=crop&q=80",
+                options: ["Tea", "Water", "Coffee", "Soda"],
+                correct: 1
+            },
+            {
+                question: "Bahasa Inggris dari makanan 'Roti' adalah...",
+                image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+                options: ["Cheese", "Butter", "Bread", "Biscuit"],
+                correct: 2
+            },
+            {
+                question: "Rabbit likes to eat ... (Kelinci suka sekali makan ...)",
+                image: "https://images.unsplash.com/photo-1598170845058-12ef4a457939?w=600&auto=format&fit=crop&q=80",
+                options: ["Carrot", "Fish", "Meatball", "Ice Cream"],
+                correct: 0
+            },
+            {
+                question: "Sugar is sweet (manis), but lemon is ... (masam).",
+                image: "https://images.unsplash.com/photo-1534706936160-d5ee67737249?w=600&auto=format&fit=crop&q=80",
+                options: ["Salty", "Bitter", "Sour", "Sweet"],
+                correct: 2
+            },
+            {
+                question: "Budi: 'Are you hungry?' <br>Siti: 'Yes, I am. I want to eat a bowl of ...'",
+                image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&auto=format&fit=crop&q=80",
+                options: ["Tea", "Noodle", "Water", "Milk"],
+                correct: 1
+            },
+            {
+                question: "Makanan di bawah ini yang memiliki rasa manis (sweet) adalah...",
+                image: "https://images.unsplash.com/photo-1560008581-09826d1de69e?w=600&auto=format&fit=crop&q=80",
+                options: ["Fried Fish", "Ice Cream", "Salted Egg", "Chicken Soup"],
+                correct: 1
+            },
+            {
+                question: "I eat ... for breakfast in the morning. (Saya makan ... untuk sarapan)",
+                image: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80",
+                options: ["Coffee", "Fried Rice", "Tea", "Mineral Water"],
+                correct: 1
+            },
+            {
+                question: "Monster ingin makan 'Bakso'. Apa Bahasa Inggris dari Bakso?",
+                image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=600&auto=format&fit=crop&q=80",
+                options: ["Meatball", "Sausage", "Steak", "Soto"],
+                correct: 0
+            },
+            {
+                question: "Pilih kalimat Bahasa Inggris yang BENAR di bawah ini:",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+                options: [
+                    "I drink a plate of pizza.",
+                    "I eat a glass of water.",
+                    "I eat a slice of pizza.",
+                    "I drink a bowl of soup."
+                ],
+                correct: 2
+            },
+            {
+                question: "Ibu menyajikan 'Hot Tea' untuk Ayah. Apa arti dari 'Hot Tea'?",
+                image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&auto=format&fit=crop&q=80",
+                options: ["Teh Dingin", "Teh Hangat / Panas", "Es Teh", "Teh Manis"],
+                correct: 1
+            },
+            {
+                question: "Doni: 'Is black coffee sweet or bitter?' <br>Alif: 'Black coffee is ...'",
+                image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80",
+                options: ["Sweet", "Bitter", "Sour", "Salty"],
+                correct: 1
+            },
+            {
+                question: "Kata ukuran 'a glass of' paling tepat digunakan untuk...",
+                image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&auto=format&fit=crop&q=80",
+                options: ["Fried Chicken", "Milk", "Pizza", "Meatball"],
+                correct: 1
+            },
+            {
+                question: "Manakah makanan/minuman di bawah ini yang BUKAN jenis makanan (Food)?",
+                image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=600&auto=format&fit=crop&q=80",
+                options: ["Burger", "Cheese", "Mineral Water", "Donut"],
+                correct: 2
+            },
+            {
+                question: "I am thirsty (haus), I need a ... of juice.",
+                image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&auto=format&fit=crop&q=80",
+                options: ["Plate", "Bowl", "Glass", "Slice"],
+                correct: 2
+            },
+            {
+                question: "Ibu memasak sup lezat. Penulisan 'Sup' dalam Bahasa Inggris yang benar adalah...",
+                image: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&auto=format&fit=crop&q=80",
+                options: ["Soup", "Soap", "Sop", "Supe"],
+                correct: 0
+            },
+            {
+                question: "Ayam goreng sangat renyah. Bahasa Inggris dari 'Ayam Goreng' adalah...",
+                image: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=600&auto=format&fit=crop&q=80",
+                options: ["Grilled Chicken", "Fried Chicken", "Chicken Soup", "Roast Chicken"],
+                correct: 1
+            },
+            {
+                question: "Monster sudah kenyang dan bilang 'Thank you!'. Arti kata 'Thank you' adalah...",
+                image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop&q=80",
+                options: ["Selamat Pagi", "Sampai Jumpa", "Terima Kasih", "Sama-Sama"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let selectedOptionIdx = null;
+        let timerInterval = null;
+        let timeLeft = 1200; // 20 minutes in seconds
+        let studentName = "";
+        let studentClass = "";
+
+        // Interactive Monster Tap
+        function triggerMonsterEat() {
+            const avatar = document.getElementById('start-monster-avatar');
+            avatar.classList.add('monster-eat');
+            setTimeout(() => avatar.classList.remove('monster-eat'), 600);
+        }
+
+        // Custom Dialog Modal (Replaces alert/confirm)
+        function showCustomDialog(message, title = "Pemberitahuan", icon = "💡", buttons = null) {
+            document.getElementById('dialog-icon').innerText = icon;
+            document.getElementById('dialog-title').innerText = title;
+            document.getElementById('dialog-message').innerText = message;
+
+            const btnContainer = document.getElementById('dialog-buttons');
+            btnContainer.innerHTML = '';
+
+            if (buttons) {
+                buttons.forEach(btn => {
+                    const b = document.createElement('button');
+                    b.className = btn.class || 'bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-xl text-sm transition-all';
+                    b.innerText = btn.text;
+                    b.onclick = () => {
+                        hideCustomDialog();
+                        if (btn.action) btn.action();
+                    };
+                    btnContainer.appendChild(b);
+                });
+            } else {
+                const b = document.createElement('button');
+                b.className = 'bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-5 rounded-xl text-sm transition-all';
+                b.innerText = 'OK';
+                b.onclick = hideCustomDialog;
+                btnContainer.appendChild(b);
+            }
+
+            document.getElementById('custom-dialog').classList.remove('hidden');
+            document.getElementById('custom-dialog').classList.add('flex');
+        }
+
+        function hideCustomDialog() {
+            document.getElementById('custom-dialog').classList.add('hidden');
+            document.getElementById('custom-dialog').classList.remove('flex');
+        }
+
+        function startGame() {
+            studentName = document.getElementById('student-name').value.trim();
+            studentClass = document.getElementById('student-class').value.trim();
+
+            if (!studentName || !studentClass) {
+                showCustomDialog("Mohon isi Nama Lengkap dan Kelas/Nomor Absen dulu ya sebelum mulai!", "Data Belum Lengkap", "✏️");
+                return;
+            }
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+
+            currentQuestionIdx = 0;
+            score = 0;
+            timeLeft = 1200;
+
+            startTimer();
+            renderQuestion();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                
+                m = m < 10 ? "0" + m : m;
+                s = s < 10 ? "0" + s : s;
+
+                document.getElementById('timer-display').innerText = `${m}:${s}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showCustomDialog("Waktu pengerjaan sudah habis! Hasil kamu akan langsung disimpan.", "Waktu Habis", "⏰", [
+                        { text: "Lihat Hasil", action: finishQuiz }
+                    ]);
+                }
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            selectedOptionIdx = null;
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+
+            const qData = quizDatabase[currentQuestionIdx];
+            document.getElementById('current-question-num').innerText = currentQuestionIdx + 1;
+            document.getElementById('question-text').innerHTML = qData.question;
+
+            // Render Question Image
+            const imgEl = document.getElementById('question-image');
+            if (qData.image) {
+                imgEl.src = qData.image;
+            }
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const optionLabels = ['A', 'B', 'C', 'D'];
+
+            qData.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 hover:border-sky-400 hover:bg-sky-50 font-bold text-slate-700 text-sm sm:text-base transition-all flex items-center gap-3 shadow-sm active:scale-[0.99]';
+                btn.onclick = () => selectOption(idx, btn);
+
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-xl bg-sky-100 text-sky-700 border border-sky-300 flex items-center justify-center font-extrabold text-sm flex-shrink-0">
+                        ${optionLabels[idx]}
+                    </span>
+                    <span class="flex-1">${optText}</span>
+                `;
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Update Monster Speech Bubble
+            const bubbles = [
+                "Nyam nyam! Pilih jawaban yang lezat!",
+                "Monster makin lapar nih! Mana jawabannya?",
+                "Jangan tegang ya, kamu pasti bisa!",
+                "Pikir baik-baik sebelum menjawab ya!"
+            ];
+            document.getElementById('monster-bubble').innerText = bubbles[currentQuestionIdx % bubbles.length];
+        }
+
+        function selectOption(idx, btnElement) {
+            selectedOptionIdx = idx;
+
+            // Highlight active selection
+            const container = document.getElementById('options-container');
+            const allBtns = container.querySelectorAll('button');
+            allBtns.forEach(b => {
+                b.className = 'w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 hover:border-sky-400 hover:bg-sky-50 font-bold text-slate-700 text-sm sm:text-base transition-all flex items-center gap-3 shadow-sm active:scale-[0.99]';
+            });
+
+            btnElement.className = 'w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 border-sky-500 bg-sky-100 font-bold text-sky-900 text-sm sm:text-base transition-all flex items-center gap-3 shadow-sm ring-2 ring-sky-300';
+
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (selectedOptionIdx === null) return;
+
+            // Check correct answer
+            if (selectedOptionIdx === quizDatabase[currentQuestionIdx].correct) {
+                score += 5; // 20 questions * 5 = 100 max score
+            }
+
+            // Animate quiz monster
+            const monster = document.getElementById('quiz-monster-avatar');
+            monster.classList.add('monster-eat');
+            setTimeout(() => monster.classList.remove('monster-eat'), 600);
+
+            currentQuestionIdx++;
+
+            if (currentQuestionIdx < quizDatabase.length) {
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            document.getElementById('final-score-display').innerText = score;
+            document.getElementById('student-summary-info').innerText = `${studentName} (${studentClass})`;
+            
+            const correctCount = score / 5;
+            document.getElementById('summary-correct').innerText = correctCount;
+
+            const timeUsedSec = 1200 - timeLeft;
+            const minutesUsed = Math.floor(timeUsedSec / 60);
+            const secondsUsed = timeUsedSec % 60;
+            const timeStr = `${minutesUsed}m ${secondsUsed}s`;
+            document.getElementById('summary-time').innerText = timeStr;
+
+            // Save result to LocalStorage for Teacher
+            saveScoreToStorage({
+                id: Date.now(),
+                name: studentName,
+                classInfo: studentClass,
+                score: score,
+                correct: correctCount,
+                timeSpent: timeStr,
+                timestamp: new Date().toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' })
+            });
+
+            // Feedback Message
+            let feedback = "";
+            let monsterAvatar = "🎉👾🍔";
+
+            if (score >= 85) {
+                feedback = "Luar biasa! Monster sangat kenyang dan gembira! Nilai Bahasa Inggris kamu sempurna! 🌟";
+                monsterAvatar = "🥳👾🍔";
+            } else if (score >= 70) {
+                feedback = "Hebat! Monster sudah cukup kenyang. Kamu paham materi Food and Drink dengan baik! 👍";
+                monsterAvatar = "😊👾🍕";
+            } else if (score >= 50) {
+                feedback = "Bagus! Monster tidak kelaparan lagi. Yuk lebih giat lagi menghafal kata Food and Drink! 💪";
+                monsterAvatar = "🙂👾🥣";
+            } else {
+                feedback = "Monster masih agak lapar nih. Jangan menyerah, yuk pelajari lagi materi Food and Drink lalu coba lagi! 🍎";
+                monsterAvatar = "🥺👾❓";
+            }
+
+            document.getElementById('feedback-message').innerText = feedback;
+            document.getElementById('result-monster-avatar').innerText = monsterAvatar;
+        }
+
+        function getStoredScores() {
+            const data = localStorage.getItem('hungry_monster_teacher_recap');
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveScoreToStorage(newRecord) {
+            const scores = getStoredScores();
+            scores.unshift(newRecord); // add newest first
+            localStorage.setItem('hungry_monster_teacher_recap', JSON.stringify(scores));
+        }
+
+        function openTeacherDashboard() {
+            renderTeacherTable();
+            const modal = document.getElementById('teacher-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTeacherDashboard() {
+            const modal = document.getElementById('teacher-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function renderTeacherTable() {
+            const tbody = document.getElementById('teacher-table-body');
+            const emptyMsg = document.getElementById('empty-scores-msg');
+            const searchKeyword = document.getElementById('search-student').value.toLowerCase().trim();
+
+            const allScores = getStoredScores();
+            const filteredScores = allScores.filter(item => 
+                item.name.toLowerCase().includes(searchKeyword) || 
+                item.classInfo.toLowerCase().includes(searchKeyword)
+            );
+
+            tbody.innerHTML = '';
+
+            if (filteredScores.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                return;
+            } else {
+                emptyMsg.classList.add('hidden');
+            }
+
+            filteredScores.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.className = index % 2 === 0 ? 'bg-white hover:bg-slate-50' : 'bg-slate-50 hover:bg-slate-100';
+
+                let scoreBadgeColor = "bg-emerald-100 text-emerald-800 border-emerald-300";
+                if (row.score < 60) scoreBadgeColor = "bg-red-100 text-red-800 border-red-300";
+                else if (row.score < 75) scoreBadgeColor = "bg-amber-100 text-amber-800 border-amber-300";
+
+                tr.innerHTML = `
+                    <td class="p-3 text-slate-500">${index + 1}</td>
+                    <td class="p-3 font-extrabold text-slate-800">${row.name}</td>
+                    <td class="p-3 text-slate-600">${row.classInfo}</td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-black border ${scoreBadgeColor}">
+                            ${row.score}
+                        </span>
+                    </td>
+                    <td class="p-3 text-center text-slate-600">${row.correct}/20</td>
+                    <td class="p-3 text-center text-slate-500 text-xs">${row.timeSpent}</td>
+                    <td class="p-3 text-slate-400 text-xs">${row.timestamp}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function confirmClearScores() {
+            showCustomDialog("Apakah Anda yakin ingin menghapus SELURUH data rekap nilai siswa?", "Konfirmasi Hapus Data", "🗑️", [
+                {
+                    text: "Ya, Hapus Semua",
+                    class: "bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl text-sm transition-all",
+                    action: () => {
+                        localStorage.removeItem('hungry_monster_teacher_recap');
+                        renderTeacherTable();
+                        showCustomDialog("Semua data nilai berhasil dihapus!", "Data Dihapus", "✅");
+                    }
+                },
+                {
+                    text: "Batal",
+                    class: "bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 px-4 rounded-xl text-sm transition-all"
+                }
+            ]);
+        }
+
+        function exportScoresCSV() {
+            const scores = getStoredScores();
+            if (scores.length === 0) {
+                showCustomDialog("Belum ada data nilai untuk diunduh!", "Data Kosong", "⚠️");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,No,Nama Siswa,Kelas/Absen,Nilai,Jawaban Benar,Waktu Pengerjaan,Tanggal Submit\n";
+            scores.forEach((row, idx) => {
+                csvContent += `${idx + 1},"${row.name}","${row.classInfo}",${row.score},${row.correct}/20,"${row.timeSpent}","${row.timestamp}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Rekap_Nilai_Hungry_Monster_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function resetToStart() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
