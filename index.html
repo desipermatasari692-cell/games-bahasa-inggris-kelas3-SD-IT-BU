@@ -628,6 +628,20 @@
 
         function finishQuiz() {
             clearInterval(timerInterval);
+            // Kirim data nilai otomatis ke Google Sheet
+fetch('PASTE_LINK_WEB_APP_IBU_DI_SINI', {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
+  body: new URLSearchParams({
+    'Nama': studentName,
+    'Kelas': studentClass,
+    'Nilai': score,
+    'Benar': correctCount
+  })
+});
 
             document.getElementById('quiz-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
